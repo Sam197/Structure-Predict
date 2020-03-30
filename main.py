@@ -1,8 +1,9 @@
 from tkinter import *
-from tkinter.ttk import *
+from tkinter.ttk import *  # Needed for drop down boxes
 
+#The prediction Logic
 def prediction_make(melting_point, conduct_solid, conduct_liquid):
-    print(melting_point, conduct_solid, conduct_liquid)
+    #print(melting_point, conduct_solid, conduct_liquid)
     melting_point = int(melting_point)
     if conduct_solid == "Yes":
         conduct_solid = True
@@ -14,16 +15,17 @@ def prediction_make(melting_point, conduct_solid, conduct_liquid):
     else:
         conduct_liquid = False
     
-    print(melting_point, conduct_solid, conduct_liquid)
+    #print(melting_point, conduct_solid, conduct_liquid)
     if conduct_solid and conduct_liquid:
-        return 3
+        return 3  # Metallic
     elif conduct_liquid and not conduct_solid:
-        return 0
+        return 0  # Ionic
     elif not conduct_solid and not conduct_liquid and melting_point < 1000:
-        return 1
+        return 1  # Simple Covalent
     else:
-        return 2
-
+        return 2  # Giant Covalent
+    
+#Making the GUI
 root = Tk()
 root.title("Box")
 root.geometry('300x150')
@@ -35,7 +37,7 @@ melting_txt.grid(column = 1, row = 0)
 
 conduct_solid_lbl = Label(root, text = "Conducts as solid?")
 conduct_solid_combo = Combobox(root)
-conduct_solid_combo['values'] = ('Yes', 'No')
+conduct_solid_combo['values'] = ('Yes', 'No') # Drop down box
 conduct_solid_combo.current(1)
 conduct_solid_lbl.grid(column = 0, row = 1)
 conduct_solid_combo.grid(column = 1, row = 1)
@@ -48,13 +50,10 @@ conduct_liquid_lbl.grid(column = 0, row = 2)
 conduct_liquid_combo.grid(column = 1, row = 2)
 
 prediction_choices = ["Ionic", "Simple Molecular", "Giant Molecular", "Metallic"]
-prediction = " "
-global index
-index = 0
 
+#nts bad logic
 def pressed():
     predict_lbl.configure(text = str(prediction_choices[prediction_make(melting_txt.get(), conduct_solid_combo.get(), conduct_liquid_combo.get())]))
-
 
 calc_button = Button(root, text = 'Predict', command = pressed)
 calc_button.grid(column = 1, row = 3) 
